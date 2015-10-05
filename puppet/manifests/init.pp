@@ -41,6 +41,7 @@ apache::vhost { 'subdomain.devlocal':
   port             => '80',
   virtual_docroot  => '/var/www/%-2+',
   docroot          => '/var/www',
+  override         => 'All',
   serveraliases    => ['*.devlocal',],
 }
 
