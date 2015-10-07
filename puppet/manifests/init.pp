@@ -10,15 +10,21 @@ package { 'htop':
     ensure => present,
 }
 
-package { 'language-pack-pt':
-    ensure => present,
+class { 'locales':
+  default_locale  => 'pt_BR.UTF-8',
+  locales         => ['pt_BR.UTF-8 UTF-8','en_US.UTF-8 UTF-8'],
 }
 
 include php
 
-class { 'php::cli': }
+Package['php5-common']
+    -> Package['php5-dev']
+    -> Package['php5-cli']
+    -> Php::Extension <| |>
 
-class { ['php::extension::curl','php::extension::gd', 'php::extension::mcrypt','php::extension::mysql','php::extension::opcache'] : }
+class { [ 'php::dev', 'php::cli' ]: }
+
+class { ['php::extension::curl','php::extension::gd','php::extension::mcrypt','php::extension::mysql','php::extension::opcache'] : }
 
 class { ['php::composer', 'php::composer::auto_update']:
   destination => '/usr/bin/composer'
