@@ -33,13 +33,15 @@ class { ['php::composer', 'php::composer::auto_update']:
 class { 'apache':
   default_vhost => false,
   mpm_module => 'prefork',
+  user => 'vagrant',
+  group => 'vagrant',
 }
 
 apache::vhost { 'devlocal':
   port    => '80',
   docroot => '/var/www',
-  docroot_owner => 'www-data',
-  docroot_group => 'www-data',
+  docroot_owner => 'vagrant',
+  docroot_group => 'vagrant',
 }
 
 apache::vhost { 'subdomain.devlocal':

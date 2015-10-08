@@ -6,7 +6,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "private_network", ip: "192.168.2.2"
 
-  config.vm.synced_folder "./www", "/var/www", owner: "www-data", group: "www-data"
+  config.vm.synced_folder "./www", "/var/www"
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
