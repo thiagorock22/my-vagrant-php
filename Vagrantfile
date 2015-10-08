@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "./www", "/var/www"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
+    vb.customize ["modifyvm", :id, "--memory", "768"]
   end
 
   config.vm.provision "puppet" do |puppet|

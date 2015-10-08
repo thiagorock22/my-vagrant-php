@@ -15,7 +15,7 @@ class { 'locales':
   locales         => ['pt_BR.UTF-8 UTF-8','en_US.UTF-8 UTF-8'],
 }
 
-include php
+include php, mymailcatcher
 
 Exec['apt-get update']
   -> Package['php5-common']
