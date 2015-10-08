@@ -17,10 +17,11 @@ class { 'locales':
 
 include php
 
-Package['php5-common']
-    -> Package['php5-dev']
-    -> Package['php5-cli']
-    -> Php::Extension <| |>
+Exec['apt-get update']
+  -> Package['php5-common']
+  -> Package['php5-dev']
+  -> Package['php5-cli']
+  -> Php::Extension <| |>
 
 class { [ 'php::dev', 'php::cli' ]: }
 
