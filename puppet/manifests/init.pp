@@ -11,17 +11,17 @@ package { 'htop':
 }
 
 class { 'locales':
-  default_locale  => 'pt_BR.UTF-8',
-  locales         => ['pt_BR.UTF-8 UTF-8','en_US.UTF-8 UTF-8'],
+  default_locale => 'pt_BR.UTF-8',
+  locales        => ['pt_BR.UTF-8 UTF-8', 'en_US.UTF-8 UTF-8']
 }
-
-include php, mymailcatcher
 
 Exec['apt-get update']
   -> Package['php5-common']
   -> Package['php5-dev']
   -> Package['php5-cli']
   -> Php::Extension <| |>
+  -> Class['mymailcatcher']
+  -> Exec['mailcatcher-php']
 
 class { [ 'php::dev', 'php::cli' ]: }
 
@@ -60,4 +60,11 @@ class { 'apache::mod::php': }
 
 class { 'mysql::server':
   root_password => '123456',
+}
+
+# include php
+class { 'mymailcatcher': }
+
+exec { 'mailcatcher-php' :
+  command => '/bin/echo "sendmail_path = /usr/bin/env $(which catchmail) -f test@local.dev" | sudo tee /etc/php5/mods-available/mailcatcher.ini && sudo php5enmod mailcatcher'
 }
