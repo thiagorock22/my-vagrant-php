@@ -19,6 +19,3 @@
 [submodule "puppet/modules/php"]
 	path = puppet/modules/php
 	url = git://github.com/jippi/puppet-php
-[submodule "puppet/modules/mailcatcher"]
-	path = puppet/modules/mailcatcher
-	url = git://github.com/thiagorock22/puppet-my-mailcatcher
