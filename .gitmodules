@@ -21,4 +21,4 @@
 	url = git://github.com/jippi/puppet-php
 [submodule "puppet/modules/mymailcatcher"]
 	path = puppet/modules/mymailcatcher
-	url = git@github.com:thiagorock22/puppet-my-mailcatcher.git
+	url = git://github.com/thiagorock22/puppet-my-mailcatcher
