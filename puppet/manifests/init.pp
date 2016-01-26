@@ -20,7 +20,7 @@ Exec['apt-get update']
   -> Package['php5-dev']
   -> Package['php5-cli']
   -> Php::Extension <| |>
-  -> Class['mymailcatcher']
+  -> Class['mailcatcher']
   -> Exec['mailcatcher-php']
 
 class { [ 'php::dev', 'php::cli' ]: }
@@ -62,8 +62,7 @@ class { 'mysql::server':
   root_password => '123456',
 }
 
-# include php
-class { 'mymailcatcher': }
+class { 'mailcatcher': }
 
 exec { 'mailcatcher-php' :
   command => '/bin/echo "sendmail_path = /usr/bin/env $(which catchmail) -f test@local.dev" | sudo tee /etc/php5/mods-available/mailcatcher.ini && sudo php5enmod mailcatcher'
