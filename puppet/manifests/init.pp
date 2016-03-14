@@ -43,10 +43,11 @@ apache::vhost { 'devlocal':
   docroot => '/var/www',
   docroot_owner => 'vagrant',
   docroot_group => 'vagrant',
+  override         => 'All',
 }
 
 apache::vhost { 'subdomain.devlocal':
-  vhost_name       => '*',
+  vhost_name       => '*.devlocal',
   port             => '80',
   virtual_docroot  => '/var/www/%-2+',
   docroot          => '/var/www',

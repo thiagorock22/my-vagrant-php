@@ -6,7 +6,11 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "private_network", ip: "192.168.2.2"
 
-  config.vm.synced_folder "./www", "/var/www"
+  if Dir.exist?("./www")
+    config.vm.synced_folder "./www", "/var/www"
+  else
+    config.vm.synced_folder Dir.pwd, "/var/www"
+  end
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "768"]
