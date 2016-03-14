@@ -65,6 +65,8 @@ class { 'mysql::server':
 
 class { 'mailcatcher': }
 
+class { 'git': }
+
 exec { 'mailcatcher-php' :
   command => '/bin/echo "sendmail_path = /usr/bin/env $(which catchmail) -f test@local.dev" | sudo tee /etc/php5/mods-available/mailcatcher.ini && sudo php5enmod mailcatcher'
 }
