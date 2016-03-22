@@ -70,3 +70,22 @@ class { 'git': }
 exec { 'mailcatcher-php' :
   command => '/bin/echo "sendmail_path = /usr/bin/env $(which catchmail) -f test@local.dev" | sudo tee /etc/php5/mods-available/mailcatcher.ini && sudo php5enmod mailcatcher'
 }
+
+swap_file::files { 'default':
+    ensure   => present,
+}
+
+apache::custom_config { 'adminer.php':
+    source => 'puppet:///modules/adminer/adminer.conf'
+}
+
+file { 'create_folder_adminer':
+    path => '/usr/share/adminer/',
+    ensure => directory,
+}
+
+exec {'retrieve_adminer':
+    command => "/usr/bin/wget -q http://www.adminer.org/latest-mysql-en.php -O /usr/share/adminer/adminer.php",
+    creates => "/usr/share/adminer/adminer.php",
+    require => File["create_folder_adminer"],
+}

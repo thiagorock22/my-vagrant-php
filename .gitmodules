@@ -22,3 +22,6 @@
 [submodule "puppet/modules/git"]
 	path = puppet/modules/git
 	url = git://github.com/puppetlabs/puppetlabs-git
+[submodule "puppet/modules/swap_file"]
+	path = puppet/modules/swap_file
+	url = git://github.com/petems/petems-swap_file
