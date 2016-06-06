@@ -28,6 +28,7 @@ class systemandtools {
       ensure => present,
   }
 
+
   package { 'build-essential':
     ensure => present,
     require => Exec['apt-get update'],
@@ -53,6 +54,7 @@ class phpinstall {
   }
 
   $extensions = ['php::extension::curl','php::extension::gd','php::extension::mcrypt','php::extension::mysql','php::extension::opcache']
+
   include $extensions
 
 }
@@ -67,13 +69,20 @@ class apacheinstall {
     docroot       => '/var/www/html',
   }
 
-  apache::vhost { 'devlocal':
+  apache::vhost { 'local':
     port           => '80',
     docroot        => '/var/www/html',
     docroot_owner  => 'vagrant',
     docroot_group  => 'vagrant',
     override       => 'All',
-    error_log_file => 'error.log',
+  }
+
+  apache::vhost { 'devlocal':
+    port           => '80',
+    docroot        => '/usr/share/devlocal/public',
+    docroot_owner  => 'vagrant',
+    docroot_group  => 'vagrant',
+    override       => 'All',
   }
 
   apache::vhost { 'subdomain.devlocal':
@@ -83,7 +92,6 @@ class apacheinstall {
     docroot          => '/var/www/html',
     override         => 'All',
     serveraliases    => ['*.devlocal',],
-    error_log_file   => 'error.log',
   }
 
   include [ 'apache::mod::rewrite', 'apache::mod::php' ]

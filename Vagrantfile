@@ -12,6 +12,10 @@ Vagrant.configure(2) do |config|
     config.vm.synced_folder Dir.pwd, "/var/www/html"
   end
 
+  if Dir.exist?(Dir.pwd+"/public")
+    config.vm.synced_folder Dir.pwd, "/usr/share/devlocal/"
+  end
+
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "768"]
   end
