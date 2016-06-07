@@ -124,12 +124,22 @@ class adminerinstall {
 
 }
 
+class installmailcatcher {
+
+  include mailcatcher
+
+  exec { 'mailcatcher-php' :
+    command => '/bin/echo "sendmail_path = /usr/bin/env $(which catchmail) -f test@local.dev" | sudo tee /etc/php5/mods-available/mailcatcher.ini && sudo php5enmod mailcatcher'
+  }
+}
+
 include systemandtools
 include development
 include phpinstall
 include apacheinstall
 include mysqlinstall
 include adminerinstall
+include installmailcatcher
 
 Exec["apt-get update"] -> Package <| |>
 

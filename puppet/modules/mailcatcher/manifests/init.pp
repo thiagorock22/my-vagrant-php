@@ -1,25 +1,29 @@
 class mailcatcher {
 
-    package { 'libsqlite3-dev':
-        ensure => present,
-    }
+  include ::apt
 
-    package { 'ruby1.9.1-dev':
-        ensure => present,
-    }
+  ::apt::ppa { 'ppa:brightbox/ruby-ng': }
 
-    exec { 'install-mailcatcher':
-        path => '/usr/bin',
-        command => 'sudo gem install mailcatcher',
-        require => Package['libsqlite3-dev','ruby1.9.1-dev'],
-    }
+  class { 'ruby::dev':
+    require        => Apt::Ppa['ppa:brightbox/ruby-ng'],
+  }
 
-    file { '/etc/init/mailcatcher.conf' :
-        path => '/etc/init/mailcatcher.conf',
-        source  => 'puppet:///modules/mailcatcher/service.conf',
-        ensure => file,
-        require => Exec['install-mailcatcher'],
-    }
+  package { 'libsqlite3-dev':
+      ensure => present,
+  }
+
+  exec { 'install-mailcatcher':
+      path => '/usr/bin',
+      command => 'sudo gem install mailcatcher',
+      require => [Class['ruby::dev'], Package['libsqlite3-dev']],
+  }
+
+  file { '/etc/init/mailcatcher.conf' :
+      path => '/etc/init/mailcatcher.conf',
+      source  => 'puppet:///modules/mailcatcher/service.conf',
+      ensure => file,
+      require => Exec['install-mailcatcher'],
+  }
 
    # exec { 'mailcatcher-php' :
    #     path => '/usr/bin',
